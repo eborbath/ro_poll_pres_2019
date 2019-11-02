@@ -36,7 +36,7 @@ dat <- dat %>%
 
 Dancila <- paste0("D", sprintf('\u0103'), "ncil", sprintf('\u0103'))
 
-ggplot(dat, aes(x=`Fieldwork end data`)) +
+plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Klaus Iohannis`, color="Iohannis")) +
   geom_smooth(aes(y=`Klaus Iohannis`, color="Iohannis"), se=FALSE) +
   geom_point(aes(y=`Viorica Dăncilă`, color=Dancila)) +
@@ -51,40 +51,79 @@ ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_smooth(aes(y=`Kelemen Hunor`, color="Kelemen"), se=FALSE) +
   scale_colour_manual("",   limits=c("Iohannis", Dancila, "Barna", "Diaconu", "Paleologu", "Kelemen"),
                       values = c("#cc9900", "#C1333C", "#FF4F01", "black", "#0863B2", "#038139")) +
-  scale_x_date(labels = date_format("%b-%y")) +
-  ggtitle("Standing of Presidential Candidates before the Ist Round") +
+  scale_x_date(labels = date_format("%b-%y"))
+
+en_plot <- plot + ggtitle("Standing of Presidential Candidates before the Ist Round") +
           guides(color=guide_legend(ncol=6))
 
 ggsave(paste0("overall", image_type),
-       plot = last_plot(),
-       path=path,
+       plot = en_plot,
+       path=paste0(path, "en_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
+hu_plot <- plot + ggtitle(paste0("Az elnökjelöltek állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) +
+          guides(color=guide_legend(ncol=6))
+
+ggsave(paste0("overall", image_type),
+       plot = hu_plot,
+       path=paste0(path, "hu_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+ro_plot <- plot + ggtitle("Candidați pentru alegerile prezidențiale înainte de turul I.") +
+          guides(color=guide_legend(ncol=6))
+
+ggsave(paste0("overall", image_type),
+       plot = ro_plot,
+       path=paste0(path, "ro_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+en_plot
 ```
 
 ## First Place
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggplot(dat, aes(x=`Fieldwork end data`)) +
+plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Klaus Iohannis`, shape=`Polling company`), color="#cc9900") +
   geom_smooth(aes(y=`Klaus Iohannis`), color="#cc9900", se=FALSE) +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
-  ggtitle("Standing of Iohannis before the Ist Round") +
   guides(color=guide_legend(ncol=6))
 
+en_plot <- plot + ggtitle("Standing of Klaus Iohannis before the Ist Round")
+
 ggsave(paste0("iohannis", image_type),
-       plot = last_plot(),
-       path=path,
+       plot = en_plot,
+       path=paste0(path, "en_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
+
+hu_plot <- plot + ggtitle(paste0("Klaus Iohannis állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+
+ggsave(paste0("iohannis", image_type),
+       plot = hu_plot,
+       path=paste0(path, "hu_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+ro_plot <- plot + ggtitle("Klaus Iohannis înainte de turul I.")
+
+ggsave(paste0("iohannis", image_type),
+       plot = ro_plot,
+       path=paste0(path, "ro_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+en_plot
 ```
 
 ## Second place
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggplot(dat, aes(x=`Fieldwork end data`)) +
+plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Viorica Dăncilă`, shape=`Polling company`)) +
   geom_smooth(aes(y=`Viorica Dăncilă`, color=Dancila), se=FALSE) +
   geom_point(aes(y=`Dan Barna`, shape=`Polling company`)) +
@@ -95,20 +134,38 @@ ggplot(dat, aes(x=`Fieldwork end data`)) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
   scale_colour_manual("",   limits=c(Dancila, "Barna", "Diaconu"),
                       values = c("#C1333C", "#FF4F01", "black")) +
-  ggtitle(paste0("Standing of ", Dancila, ", Barna, and Diaconu before the Ist Round")) +
   guides(color=guide_legend(ncol=3, order = 1))
 
+en_plot <- plot + ggtitle(paste0("Standing of ", Dancila, ", Barna, and Diaconu before the Ist Round"))
+
 ggsave(paste0("second_place", image_type),
-       plot = last_plot(),
-       path=path,
+       plot = en_plot,
+       path=paste0(path, "en_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
+
+hu_plot <- plot + ggtitle(paste0(Dancila, ", Barna, és Diaconu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+
+ggsave(paste0("second_place", image_type),
+       plot = hu_plot,
+       path=paste0(path, "hu_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+ro_plot <- plot + ggtitle(paste0(Dancila, ", Barna, și Diaconu înainte de turul I."))
+ggsave(paste0("second_place", image_type),
+       plot = ro_plot,
+       path=paste0(path, "ro_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+en_plot
 ```
 
 ## Third Place
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggplot(dat, aes(x=`Fieldwork end data`)) +
+plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Theodor Paleologu`, shape=`Polling company`)) +
   geom_smooth(aes(y=`Theodor Paleologu`, color="Paleologu"), se=FALSE) +
   geom_point(aes(y=`Kelemen Hunor`, shape=`Polling company`)) +
@@ -117,122 +174,256 @@ ggplot(dat, aes(x=`Fieldwork end data`)) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
   scale_colour_manual("",   limits=c("Paleologu", "Kelemen"),
                       values = c("#0863B2", "#038139")) +
-  ggtitle("Standing of Paleologu and Kelemen before the Ist Round") +
   guides(color=guide_legend(ncol=2, order = 1)) +
   ylim(0, 8)
 
+en_plot <- plot + ggtitle("Standing of Paleologu and Kelemen before the Ist Round")
+
 ggsave(paste0("third_place", image_type),
-       plot = last_plot(),
-       path=path,
+       plot = en_plot,
+       path=paste0(path, "en_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
+
+hu_plot <- plot + ggtitle(paste0("Paleologu és Kelemen állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+
+ggsave(paste0("third_place", image_type),
+       plot = hu_plot,
+       path=paste0(path, "hu_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+ro_plot <- plot + ggtitle(paste0("Paleologu și Kelemen înainte de turul I."))
+
+ggsave(paste0("third_place", image_type),
+       plot = ro_plot,
+       path=paste0(path, "ro_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+en_plot
+
 ```
 
 ## Dăncilă
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggplot(dat, aes(x=`Fieldwork end data`)) +
+plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Viorica Dăncilă`, shape=`Polling company`)) +
   geom_smooth(aes(y=`Viorica Dăncilă`), color="#C1333C", se=FALSE, ) +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
-  ggtitle(paste0("Standing of ", Dancila, " before the Ist Round")) +
   guides(color=guide_legend(ncol=3, order = 1))
 
+en_plot <- plot + ggtitle(paste0("Standing of ", Dancila, " before the Ist Round"))
+
 ggsave(paste0("Dancila", image_type),
-       plot = last_plot(),
-       path=path,
+       plot = en_plot,
+       path=paste0(path, "en_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
+
+hu_plot <- plot + ggtitle(paste0(Dancila, " állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+
+ggsave(paste0("Dancila", image_type),
+       plot = hu_plot,
+       path=paste0(path, "hu_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+ro_plot <- plot + ggtitle(paste0(Dancila, " înainte de turul I."))
+
+ggsave(paste0("Dancila", image_type),
+       plot = ro_plot,
+       path=paste0(path, "ro_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+en_plot
 ```
 
 
 ## Barna
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggplot(dat, aes(x=`Fieldwork end data`)) +
+plot <- plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Dan Barna`, shape=`Polling company`)) +
   geom_smooth(aes(y=`Dan Barna`), color="#FF4F01" , se=FALSE) +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
-  ggtitle(paste0("Standing of Barna before the Ist Round")) +
   guides(color=guide_legend(ncol=3, order = 1))
 
+en_plot <- plot + ggtitle(paste0("Standing of Barna before the Ist Round"))
+
 ggsave(paste0("Barna", image_type),
-       plot = last_plot(),
-       path=path,
+       plot = en_plot,
+       path=paste0(path, "en_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
+
+hu_plot <- plot + ggtitle(paste0("Barna állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+
+ggsave(paste0("Barna", image_type),
+       plot = hu_plot,
+       path=paste0(path, "hu_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+ro_plot <- plot + ggtitle(paste0("Barna înainte de turul I."))
+
+ggsave(paste0("Barna", image_type),
+       plot = ro_plot,
+       path=paste0(path, "ro_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+en_plot
 ```
 
 ## Diaconu
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggplot(dat, aes(x=`Fieldwork end data`)) +
+plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Mircea Diaconu`, shape=`Polling company`)) +
   geom_smooth(aes(y=`Mircea Diaconu`), color="black" , se=FALSE) +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
-  ggtitle(paste0("Standing of Diaconu before the Ist Round")) +
   guides(color=guide_legend(ncol=3, order = 1))
 
+en_plot <- plot + ggtitle(paste0("Standing of Diaconu before the Ist Round"))
+
 ggsave(paste0("Diaconu", image_type),
-       plot = last_plot(),
-       path=path,
+       plot = en_plot,
+       path=paste0(path, "en_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
+
+hu_plot <- plot + ggtitle(paste0("Diaconu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+
+ggsave(paste0("Diaconu", image_type),
+       plot = hu_plot,
+       path=paste0(path, "hu_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+ro_plot <- plot + ggtitle(paste0("Diaconu înainte de turul I."))
+
+ggsave(paste0("Diaconu", image_type),
+       plot = ro_plot,
+       path=paste0(path, "ro_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+en_plot
 ```
 
 ## Paleologu
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggplot(dat, aes(x=`Fieldwork end data`)) +
+plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Theodor Paleologu`, shape=`Polling company`)) +
   geom_smooth(aes(y=`Theodor Paleologu`), color="#0863B2" , se=FALSE) +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
-  ggtitle("Standing of Paleologu before the Ist Round") +
   guides(color=guide_legend(ncol=2, order = 1)) 
 
+en_plot <- plot + ggtitle(paste0("Standing of Paleologu before the Ist Round"))
+
 ggsave(paste0("Paleologu", image_type),
-       plot = last_plot(),
-       path=path,
+       plot = en_plot,
+       path=paste0(path, "en_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
+
+hu_plot <- plot + ggtitle(paste0("Paleologu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+
+ggsave(paste0("Paleologu", image_type),
+       plot = hu_plot,
+       path=paste0(path, "hu_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+ro_plot <- plot + ggtitle(paste0("Paleologu înainte de turul I."))
+
+ggsave(paste0("Paleologu", image_type),
+       plot = ro_plot,
+       path=paste0(path, "ro_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+en_plot
 ```
 
 ## Kelemen
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggplot(dat, aes(x=`Fieldwork end data`)) +
+plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Kelemen Hunor`, shape=`Polling company`)) +
   geom_smooth(aes(y=`Kelemen Hunor`), se=FALSE, color="#038139") +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
-  ggtitle("Standing of Kelemen before the Ist Round") +
   guides(color=guide_legend(ncol=2, order = 1)) +
   ylim(0, 4.5)
 
+en_plot <- plot + ggtitle(paste0("Standing of Kelemen before the Ist Round"))
+
 ggsave(paste0("Kelemen", image_type),
-       plot = last_plot(),
-       path=path,
+       plot = en_plot,
+       path=paste0(path, "en_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
+
+hu_plot <- plot + ggtitle(paste0("Kelemen állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+
+ggsave(paste0("Kelemen", image_type),
+       plot = hu_plot,
+       path=paste0(path, "hu_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+ro_plot <- plot + ggtitle(paste0("Kelemen înainte de turul I."))
+
+ggsave(paste0("Kelemen", image_type),
+       plot = ro_plot,
+       path=paste0(path, "ro_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+en_plot
 ```
 
 ## Cumpănasu
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggplot(dat, aes(x=`Fieldwork end data`)) +
+plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Alexandru Cumpănasu`, shape=`Polling company`, color="Cumpănașu"), color="#C1333C") +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
-  ggtitle(paste0("Standing of Cump", sprintf('\u0103'), "nașu before the Ist Round")) +
   ylim(0, 4)
 
-ggsave(paste0("other_candidates", image_type),
-       plot = last_plot(),
-       path=path,
+en_plot <- plot + ggtitle(paste0("Standing of Cump", sprintf('\u0103'), "nașu before the Ist Round"))
+
+ggsave(paste0("Cumpanasu", image_type),
+       plot = en_plot,
+       path=paste0(path, "en_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
+
+hu_plot <- plot + ggtitle(paste0("Cump", sprintf('\u0103'), "nașu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+
+ggsave(paste0("Cumpanasu", image_type),
+       plot = hu_plot,
+       path=paste0(path, "hu_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+ro_plot <- plot + ggtitle(paste0("Cump", sprintf('\u0103'), "nașu înainte de turul I."))
+
+ggsave(paste0("Cumpanasu", image_type),
+       plot = ro_plot,
+       path=paste0(path, "ro_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+en_plot
 ```
