@@ -1,2 +1,6 @@
-# ro_poll_pres_2019
-Public Opinion Polls for the Romanian Presidential Elections
+# Public Opinion Polls for the Romanian Presidential Elections
+
+Collection of public opinion polls published between August and October on the Romanian presidential elections.
+
+The excel file contains the collection of polls.
+The markdown file contains the R code for the figures.
