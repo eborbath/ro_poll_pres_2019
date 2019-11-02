@@ -36,7 +36,7 @@ dat <- dat %>%
 
 Dancila <- paste0("D", sprintf('\u0103'), "ncil", sprintf('\u0103'))
 
-plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
+plot <-  ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Klaus Iohannis`, color="Iohannis")) +
   geom_smooth(aes(y=`Klaus Iohannis`, color="Iohannis"), se=FALSE) +
   geom_point(aes(y=`Viorica Dăncilă`, color=Dancila)) +
@@ -49,12 +49,19 @@ plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_smooth(aes(y=`Theodor Paleologu`, color="Paleologu"), se=FALSE) +
     geom_point(aes(y=`Kelemen Hunor`, color="Kelemen")) +
   geom_smooth(aes(y=`Kelemen Hunor`, color="Kelemen"), se=FALSE) +
+  geom_vline(xintercept = as.numeric(as.Date("2019-08-26")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-09-22")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-10-10")), linetype="dashed") +
   scale_colour_manual("",   limits=c("Iohannis", Dancila, "Barna", "Diaconu", "Paleologu", "Kelemen"),
                       values = c("#cc9900", "#C1333C", "#FF4F01", "black", "#0863B2", "#038139")) +
   scale_x_date(labels = date_format("%b-%y"))
 
-en_plot <- plot + ggtitle("Standing of Presidential Candidates before the Ist Round") +
-          guides(color=guide_legend(ncol=6))
+en_plot <- plot + ggtitle("Standing of Presidential Candidates before the Ist Round")+
+          guides(color=guide_legend(ncol=6)) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=30, label="ALDE leaves the gov."), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=29.5, label="List of candidates"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=30, label="finalized"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=30, label=paste0(Dancila, " ousted as PM")), color="black", angle = 90)
 
 ggsave(paste0("overall", image_type),
        plot = en_plot,
@@ -63,7 +70,12 @@ ggsave(paste0("overall", image_type),
        width=20.85, height=14.05, units="cm")
 
 hu_plot <- plot + ggtitle(paste0("Az elnökjelöltek állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) +
-          guides(color=guide_legend(ncol=6))
+          guides(color=guide_legend(ncol=6)) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=30, label="Az ALDE kilép a kormányból"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=29.5, label="Végleges lista a"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=30, label=paste0("jelöltekr", sprintf('\u0151'), "l")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=30, label=paste0("Megbukik a ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=30, label=paste0("kormány")), color="black", angle = 90)
 
 ggsave(paste0("overall", image_type),
        plot = hu_plot,
@@ -72,7 +84,13 @@ ggsave(paste0("overall", image_type),
        width=20.85, height=14.05, units="cm")
 
 ro_plot <- plot + ggtitle("Candidați pentru alegerile prezidențiale înainte de turul I.") +
-          guides(color=guide_legend(ncol=6))
+          guides(color=guide_legend(ncol=6))  +
+          guides(color=guide_legend(ncol=6)) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=30, label="ALDE iese de la guvernare"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=31, label=paste0("Termenul-limit", sprintf('\u0103'), " ptr. depu-")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=31, label="nerea candidaturilor"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=30, label=paste0("Guvernul ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=30, label=paste0("este demis")), color="black", angle = 90)
 
 ggsave(paste0("overall", image_type),
        plot = ro_plot,
@@ -91,9 +109,18 @@ plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_smooth(aes(y=`Klaus Iohannis`), color="#cc9900", se=FALSE) +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
-  guides(color=guide_legend(ncol=6))
+  guides(color=guide_legend(ncol=6)) +
+  geom_vline(xintercept = as.numeric(as.Date("2019-08-26")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-09-22")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-10-10")), linetype="dashed")
+  
 
-en_plot <- plot + ggtitle("Standing of Klaus Iohannis before the Ist Round")
+en_plot <- plot + ggtitle("Standing of Klaus Iohannis before the Ist Round")  +
+  geom_text(aes(x=as.Date("2019-08-25"), y=41, label="ALDE leaves the gov."), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=46, label="List of candidates"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=46, label="finalized"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=46, label=paste0(Dancila, " ousted as PM")), color="black", angle = 90)
+
 
 ggsave(paste0("iohannis", image_type),
        plot = en_plot,
@@ -101,7 +128,12 @@ ggsave(paste0("iohannis", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-hu_plot <- plot + ggtitle(paste0("Klaus Iohannis állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+hu_plot <- plot + ggtitle(paste0("Klaus Iohannis állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))  +
+  geom_text(aes(x=as.Date("2019-08-25"), y=40, label="Az ALDE kilép a kormányból"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=46, label="Végleges lista a"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=46, label=paste0("jelöltekr", sprintf('\u0151'), "l")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=46, label=paste0("Megbukik a ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=46, label=paste0("kormány")), color="black", angle = 90)
 
 ggsave(paste0("iohannis", image_type),
        plot = hu_plot,
@@ -109,13 +141,18 @@ ggsave(paste0("iohannis", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-ro_plot <- plot + ggtitle("Klaus Iohannis înainte de turul I.")
+ro_plot <- plot + ggtitle("Klaus Iohannis înainte de turul I.") +
+  geom_text(aes(x=as.Date("2019-08-25"), y=40.5, label="ALDE iese de la guvernare"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=46.5, label=paste0("Termenul-limit", sprintf('\u0103'), " ptr. depu-")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=46.5, label="nerea candidaturilor"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=46, label=paste0("Guvernul ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=46, label=paste0("este demis")), color="black", angle = 90)
 
 ggsave(paste0("iohannis", image_type),
        plot = ro_plot,
        path=paste0(path, "ro_figures/"),
        dpi=335,
-       width=20.85, height=14.05, units="cm")
+       width=20.85, height=14.05, units="cm") 
 
 en_plot
 ```
@@ -124,19 +161,28 @@ en_plot
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
-  geom_point(aes(y=`Viorica Dăncilă`, shape=`Polling company`)) +
+  geom_point(aes(y=`Viorica Dăncilă`, shape=`Polling company`, color=Dancila)) +
   geom_smooth(aes(y=`Viorica Dăncilă`, color=Dancila), se=FALSE) +
-  geom_point(aes(y=`Dan Barna`, shape=`Polling company`)) +
+  geom_point(aes(y=`Dan Barna`, shape=`Polling company`, color="Barna")) +
   geom_smooth(aes(y=`Dan Barna`, color="Barna"), se=FALSE) +
-  geom_point(aes(y=`Mircea Diaconu`, shape=`Polling company`)) +
+  geom_point(aes(y=`Mircea Diaconu`, shape=`Polling company`, color="Diaconu")) +
   geom_smooth(aes(y=`Mircea Diaconu`, color="Diaconu"), se=FALSE) +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
   scale_colour_manual("",   limits=c(Dancila, "Barna", "Diaconu"),
                       values = c("#C1333C", "#FF4F01", "black")) +
-  guides(color=guide_legend(ncol=3, order = 1))
+  guides(color=guide_legend(ncol=3, order = 1)) +
+  geom_vline(xintercept = as.numeric(as.Date("2019-08-26")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-09-22")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-10-10")), linetype="dashed") +
+  ylim(0, NA)
 
-en_plot <- plot + ggtitle(paste0("Standing of ", Dancila, ", Barna, and Diaconu before the Ist Round"))
+en_plot <- plot + ggtitle(paste0("Standing of ", Dancila, ", Barna, and Diaconu before the Ist Round")) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=6, label="ALDE leaves the gov."), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=4.5, label="List of candidates"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=4.5, label="finalized"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=5, label=paste0(Dancila, " ousted")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=5, label="as PM"), color="black", angle = 90)
 
 ggsave(paste0("second_place", image_type),
        plot = en_plot,
@@ -144,7 +190,13 @@ ggsave(paste0("second_place", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-hu_plot <- plot + ggtitle(paste0(Dancila, ", Barna, és Diaconu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+hu_plot <- plot + ggtitle(paste0(Dancila, ", Barna, és Diaconu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=6, label="Az ALDE kilép a kormányból"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=4.5, label="Végleges lista a"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=4.5, label=paste0("jelöltekr", sprintf('\u0151'), "l")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=5, label=paste0("Megbukik a ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=5, label=paste0("kormány")), color="black", angle = 90)
+
 
 ggsave(paste0("second_place", image_type),
        plot = hu_plot,
@@ -152,7 +204,13 @@ ggsave(paste0("second_place", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-ro_plot <- plot + ggtitle(paste0(Dancila, ", Barna, și Diaconu înainte de turul I."))
+ro_plot <- plot + ggtitle(paste0(Dancila, ", Barna, și Diaconu înainte de turul I.")) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=6, label="ALDE iese de la guvernare"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=5.5, label=paste0("Termenul-limit", sprintf('\u0103'), " ptr.")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=5.5, label="depunerea candidaturilor"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=5, label=paste0("Guvernul ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=5, label=paste0("este demis")), color="black", angle = 90)
+
 ggsave(paste0("second_place", image_type),
        plot = ro_plot,
        path=paste0(path, "ro_figures/"),
@@ -166,18 +224,26 @@ en_plot
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
-  geom_point(aes(y=`Theodor Paleologu`, shape=`Polling company`)) +
+  geom_point(aes(y=`Theodor Paleologu`, shape=`Polling company`, color="Paleologu")) +
   geom_smooth(aes(y=`Theodor Paleologu`, color="Paleologu"), se=FALSE) +
-  geom_point(aes(y=`Kelemen Hunor`, shape=`Polling company`)) +
+  geom_point(aes(y=`Kelemen Hunor`, shape=`Polling company`, color="Kelemen")) +
   geom_smooth(aes(y=`Kelemen Hunor`, color="Kelemen"), se=FALSE) +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
   scale_colour_manual("",   limits=c("Paleologu", "Kelemen"),
                       values = c("#0863B2", "#038139")) +
   guides(color=guide_legend(ncol=2, order = 1)) +
-  ylim(0, 8)
+  ylim(0, 8) +
+  geom_vline(xintercept = as.numeric(as.Date("2019-08-26")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-09-22")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-10-10")), linetype="dashed")
 
-en_plot <- plot + ggtitle("Standing of Paleologu and Kelemen before the Ist Round")
+en_plot <- plot + ggtitle("Standing of Paleologu and Kelemen before the Ist Round") +
+  geom_text(aes(x=as.Date("2019-08-25"), y=4, label="ALDE leaves the gov."), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=1.2, label="List of candidates"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=1.2, label="finalized"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=1.2, label=paste0(Dancila, " ousted")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=1.2, label="as PM"), color="black", angle = 90)
 
 ggsave(paste0("third_place", image_type),
        plot = en_plot,
@@ -185,7 +251,12 @@ ggsave(paste0("third_place", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-hu_plot <- plot + ggtitle(paste0("Paleologu és Kelemen állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+hu_plot <- plot + ggtitle(paste0("Paleologu és Kelemen állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) + 
+  geom_text(aes(x=as.Date("2019-08-25"), y=5, label="Az ALDE kilép a kormányból"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=1.2, label="Végleges lista a"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=1.2, label=paste0("jelöltekr", sprintf('\u0151'), "l")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=1.5, label=paste0("Megbukik a ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=1.5, label=paste0("kormány")), color="black", angle = 90)
 
 ggsave(paste0("third_place", image_type),
        plot = hu_plot,
@@ -193,7 +264,12 @@ ggsave(paste0("third_place", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-ro_plot <- plot + ggtitle(paste0("Paleologu și Kelemen înainte de turul I."))
+ro_plot <- plot + ggtitle(paste0("Paleologu și Kelemen înainte de turul I."))  +
+  geom_text(aes(x=as.Date("2019-08-25"), y=5, label="ALDE iese de la guvernare"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=2.3, label=paste0("Termenul-limit", sprintf('\u0103'), " ptr. depunerea")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=1.7, label="candidaturilor"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=1.5, label=paste0("Guvernul ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=1.5, label=paste0("este demis")), color="black", angle = 90)
 
 ggsave(paste0("third_place", image_type),
        plot = ro_plot,
@@ -209,13 +285,21 @@ en_plot
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
-  geom_point(aes(y=`Viorica Dăncilă`, shape=`Polling company`)) +
+  geom_point(aes(y=`Viorica Dăncilă`, shape=`Polling company`), color="#C1333C") +
   geom_smooth(aes(y=`Viorica Dăncilă`), color="#C1333C", se=FALSE, ) +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
-  guides(color=guide_legend(ncol=3, order = 1))
+  guides(color=guide_legend(ncol=3, order = 1)) +
+  geom_vline(xintercept = as.numeric(as.Date("2019-08-26")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-09-22")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-10-10")), linetype="dashed")
 
-en_plot <- plot + ggtitle(paste0("Standing of ", Dancila, " before the Ist Round"))
+en_plot <- plot + ggtitle(paste0("Standing of ", Dancila, " before the Ist Round"))  +
+  geom_text(aes(x=as.Date("2019-08-25"), y=19, label="ALDE leaves the gov."), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=13, label="List of candidates"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=13, label="finalized"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=13, label=paste0(Dancila, " ousted")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=13, label="as PM"), color="black", angle = 90)
 
 ggsave(paste0("Dancila", image_type),
        plot = en_plot,
@@ -223,7 +307,12 @@ ggsave(paste0("Dancila", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-hu_plot <- plot + ggtitle(paste0(Dancila, " állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+hu_plot <- plot + ggtitle(paste0(Dancila, " állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) +  
+  geom_text(aes(x=as.Date("2019-08-25"), y=19, label="Az ALDE kilép a kormányból"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=13, label="Végleges lista a"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=13, label=paste0("jelöltekr", sprintf('\u0151'), "l")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=13, label=paste0("Megbukik a ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=13, label=paste0("kormány")), color="black", angle = 90)
 
 ggsave(paste0("Dancila", image_type),
        plot = hu_plot,
@@ -231,7 +320,12 @@ ggsave(paste0("Dancila", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-ro_plot <- plot + ggtitle(paste0(Dancila, " înainte de turul I."))
+ro_plot <- plot + ggtitle(paste0(Dancila, " înainte de turul I.")) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=19, label="ALDE iese de la guvernare"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=13, label=paste0("Termenul-limit", sprintf('\u0103'), " ptr. depunerea")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=13, label="candidaturilor"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=13, label=paste0("Guvernul ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=13, label=paste0("este demis")), color="black", angle = 90)
 
 ggsave(paste0("Dancila", image_type),
        plot = ro_plot,
@@ -247,13 +341,21 @@ en_plot
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
 plot <- plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
-  geom_point(aes(y=`Dan Barna`, shape=`Polling company`)) +
+  geom_point(aes(y=`Dan Barna`, shape=`Polling company`), color="#FF4F01") +
   geom_smooth(aes(y=`Dan Barna`), color="#FF4F01" , se=FALSE) +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
-  guides(color=guide_legend(ncol=3, order = 1))
+  guides(color=guide_legend(ncol=3, order = 1)) +
+  geom_vline(xintercept = as.numeric(as.Date("2019-08-26")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-09-22")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-10-10")), linetype="dashed")
 
-en_plot <- plot + ggtitle(paste0("Standing of Barna before the Ist Round"))
+en_plot <- plot + ggtitle(paste0("Standing of Barna before the Ist Round")) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=17, label="ALDE leaves the gov."), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=12, label="List of candidates"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=12, label="finalized"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=12, label=paste0(Dancila, " ousted")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=12, label="as PM"), color="black", angle = 90)
 
 ggsave(paste0("Barna", image_type),
        plot = en_plot,
@@ -261,7 +363,11 @@ ggsave(paste0("Barna", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-hu_plot <- plot + ggtitle(paste0("Barna állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+hu_plot <- plot + ggtitle(paste0("Barna állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) + geom_text(aes(x=as.Date("2019-08-25"), y=17.5, label="Az ALDE kilép a kormányból"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=12, label="Végleges lista a"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=12, label=paste0("jelöltekr", sprintf('\u0151'), "l")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=12, label=paste0("Megbukik a ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=12, label=paste0("kormány")), color="black", angle = 90)
 
 ggsave(paste0("Barna", image_type),
        plot = hu_plot,
@@ -269,7 +375,12 @@ ggsave(paste0("Barna", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-ro_plot <- plot + ggtitle(paste0("Barna înainte de turul I."))
+ro_plot <- plot + ggtitle(paste0("Barna înainte de turul I.")) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=17.5, label="ALDE iese de la guvernare"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=12.2, label=paste0("Termenul-limit", sprintf('\u0103'), " ptr. depunerea")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=12.2, label="candidaturilor"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=12, label=paste0("Guvernul ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=12, label=paste0("este demis")), color="black", angle = 90)
 
 ggsave(paste0("Barna", image_type),
        plot = ro_plot,
@@ -284,13 +395,21 @@ en_plot
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
-  geom_point(aes(y=`Mircea Diaconu`, shape=`Polling company`)) +
+  geom_point(aes(y=`Mircea Diaconu`, shape=`Polling company`), color="black") +
   geom_smooth(aes(y=`Mircea Diaconu`), color="black" , se=FALSE) +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
-  guides(color=guide_legend(ncol=3, order = 1))
+  guides(color=guide_legend(ncol=3, order = 1)) +
+  geom_vline(xintercept = as.numeric(as.Date("2019-08-26")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-09-22")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-10-10")), linetype="dashed")
 
-en_plot <- plot + ggtitle(paste0("Standing of Diaconu before the Ist Round"))
+en_plot <- plot + ggtitle(paste0("Standing of Diaconu before the Ist Round")) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=10, label="ALDE leaves the gov."), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=10, label="List of candidates"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=10, label="finalized"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=8.5, label=paste0(Dancila, " ousted")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=8.5, label="as PM"), color="black", angle = 90)
 
 ggsave(paste0("Diaconu", image_type),
        plot = en_plot,
@@ -298,7 +417,11 @@ ggsave(paste0("Diaconu", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-hu_plot <- plot + ggtitle(paste0("Diaconu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+hu_plot <- plot + ggtitle(paste0("Diaconu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) + geom_text(aes(x=as.Date("2019-08-25"), y=10, label="Az ALDE kilép a kormányból"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=10, label="Végleges lista a"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=10, label=paste0("jelöltekr", sprintf('\u0151'), "l")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=8.5, label=paste0("Megbukik a ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=8.5, label=paste0("kormány")), color="black", angle = 90)
 
 ggsave(paste0("Diaconu", image_type),
        plot = hu_plot,
@@ -306,7 +429,12 @@ ggsave(paste0("Diaconu", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-ro_plot <- plot + ggtitle(paste0("Diaconu înainte de turul I."))
+ro_plot <- plot + ggtitle(paste0("Diaconu înainte de turul I.")) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=10, label="ALDE iese de la guvernare"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=10, label=paste0("Termenul-limit", sprintf('\u0103'), " ptr. depunerea")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=10, label="candidaturilor"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=8.5, label=paste0("Guvernul ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=8.5, label=paste0("este demis")), color="black", angle = 90)
 
 ggsave(paste0("Diaconu", image_type),
        plot = ro_plot,
@@ -321,13 +449,21 @@ en_plot
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
-  geom_point(aes(y=`Theodor Paleologu`, shape=`Polling company`)) +
-  geom_smooth(aes(y=`Theodor Paleologu`), color="#0863B2" , se=FALSE) +
+  geom_point(aes(y=`Theodor Paleologu`, shape=`Polling company`), color="#0863B2") +
+  geom_smooth(aes(y=`Theodor Paleologu`), color="#0863B2", se=FALSE) +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
-  guides(color=guide_legend(ncol=2, order = 1)) 
+  guides(color=guide_legend(ncol=2, order = 1))  +
+  geom_vline(xintercept = as.numeric(as.Date("2019-08-26")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-09-22")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-10-10")), linetype="dashed")
 
-en_plot <- plot + ggtitle(paste0("Standing of Paleologu before the Ist Round"))
+en_plot <- plot + ggtitle(paste0("Standing of Paleologu before the Ist Round")) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=7, label="ALDE leaves the gov."), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=7, label="List of candidates"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=7, label="finalized"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=8, label=paste0(Dancila, " ousted")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=8, label="as PM"), color="black", angle = 90)
 
 ggsave(paste0("Paleologu", image_type),
        plot = en_plot,
@@ -335,7 +471,11 @@ ggsave(paste0("Paleologu", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-hu_plot <- plot + ggtitle(paste0("Paleologu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+hu_plot <- plot + ggtitle(paste0("Paleologu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) + geom_text(aes(x=as.Date("2019-08-25"), y=7, label="Az ALDE kilép a kormányból"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=7, label="Végleges lista a"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=7, label=paste0("jelöltekr", sprintf('\u0151'), "l")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=8, label=paste0("Megbukik a ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=8, label=paste0("kormány")), color="black", angle = 90)
 
 ggsave(paste0("Paleologu", image_type),
        plot = hu_plot,
@@ -343,7 +483,12 @@ ggsave(paste0("Paleologu", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-ro_plot <- plot + ggtitle(paste0("Paleologu înainte de turul I."))
+ro_plot <- plot + ggtitle(paste0("Paleologu înainte de turul I.")) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=7, label="ALDE iese de la guvernare"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=7, label=paste0("Termenul-limit", sprintf('\u0103'), " ptr. depunerea")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=7, label="candidaturilor"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=8, label=paste0("Guvernul ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=8, label=paste0("este demis")), color="black", angle = 90)
 
 ggsave(paste0("Paleologu", image_type),
        plot = ro_plot,
@@ -358,14 +503,22 @@ en_plot
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
-  geom_point(aes(y=`Kelemen Hunor`, shape=`Polling company`)) +
+  geom_point(aes(y=`Kelemen Hunor`, shape=`Polling company`), color="#038139") +
   geom_smooth(aes(y=`Kelemen Hunor`), se=FALSE, color="#038139") +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
   guides(color=guide_legend(ncol=2, order = 1)) +
-  ylim(0, 4.5)
+  ylim(0, 4.5) +
+  geom_vline(xintercept = as.numeric(as.Date("2019-08-26")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-09-22")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-10-10")), linetype="dashed")
 
-en_plot <- plot + ggtitle(paste0("Standing of Kelemen before the Ist Round"))
+en_plot <- plot + ggtitle(paste0("Standing of Kelemen before the Ist Round")) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=3, label="ALDE leaves the gov."), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=1, label="List of candidates"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=1, label="finalized"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=1, label=paste0(Dancila, " ousted")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=1, label="as PM"), color="black", angle = 90)
 
 ggsave(paste0("Kelemen", image_type),
        plot = en_plot,
@@ -373,7 +526,11 @@ ggsave(paste0("Kelemen", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-hu_plot <- plot + ggtitle(paste0("Kelemen állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+hu_plot <- plot + ggtitle(paste0("Kelemen állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) + geom_text(aes(x=as.Date("2019-08-25"), y=3.2, label="Az ALDE kilép a kormányból"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=1, label="Végleges lista a"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=1, label=paste0("jelöltekr", sprintf('\u0151'), "l")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=1, label=paste0("Megbukik a ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=1, label=paste0("kormány")), color="black", angle = 90)
 
 ggsave(paste0("Kelemen", image_type),
        plot = hu_plot,
@@ -381,7 +538,12 @@ ggsave(paste0("Kelemen", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-ro_plot <- plot + ggtitle(paste0("Kelemen înainte de turul I."))
+ro_plot <- plot + ggtitle(paste0("Kelemen înainte de turul I.")) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=3.2, label="ALDE iese de la guvernare"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=1.2, label=paste0("Termenul-limit", sprintf('\u0103'), " ptr. depunerea")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=1.2, label="candidaturilor"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=1.2, label=paste0("Guvernul ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=1.2, label=paste0("este demis")), color="black", angle = 90)
 
 ggsave(paste0("Kelemen", image_type),
        plot = ro_plot,
@@ -399,9 +561,17 @@ plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Alexandru Cumpănasu`, shape=`Polling company`, color="Cumpănașu"), color="#C1333C") +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
-  ylim(0, 4)
+  ylim(0, 4) +
+  geom_vline(xintercept = as.numeric(as.Date("2019-08-26")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-09-22")), linetype="dashed") +
+  geom_vline(xintercept = as.numeric(as.Date("2019-10-10")), linetype="dashed")
 
-en_plot <- plot + ggtitle(paste0("Standing of Cump", sprintf('\u0103'), "nașu before the Ist Round"))
+en_plot <- plot + ggtitle(paste0("Standing of Cump", sprintf('\u0103'), "nașu before the Ist Round"))  +
+  geom_text(aes(x=as.Date("2019-08-25"), y=2, label="ALDE leaves the gov."), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=2, label="List of candidates"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=2, label="finalized"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=2, label=paste0(Dancila, " ousted")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=2, label="as PM"), color="black", angle = 90)
 
 ggsave(paste0("Cumpanasu", image_type),
        plot = en_plot,
@@ -409,7 +579,11 @@ ggsave(paste0("Cumpanasu", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-hu_plot <- plot + ggtitle(paste0("Cump", sprintf('\u0103'), "nașu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))
+hu_plot <- plot + ggtitle(paste0("Cump", sprintf('\u0103'), "nașu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) + geom_text(aes(x=as.Date("2019-08-25"), y=2, label="Az ALDE kilép a kormányból"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=2, label="Végleges lista a"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=2, label=paste0("jelöltekr", sprintf('\u0151'), "l")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=2, label=paste0("Megbukik a ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=2, label=paste0("kormány")), color="black", angle = 90)
 
 ggsave(paste0("Cumpanasu", image_type),
        plot = hu_plot,
@@ -417,7 +591,12 @@ ggsave(paste0("Cumpanasu", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-ro_plot <- plot + ggtitle(paste0("Cump", sprintf('\u0103'), "nașu înainte de turul I."))
+ro_plot <- plot + ggtitle(paste0("Cump", sprintf('\u0103'), "nașu înainte de turul I.")) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=2, label="ALDE iese de la guvernare"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=2, label=paste0("Termenul-limit", sprintf('\u0103'), " pentru depunerea")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=2, label="candidaturilor"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=2, label=paste0("Guvernul ", Dancila)), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=2, label=paste0("este demis")), color="black", angle = 90)
 
 ggsave(paste0("Cumpanasu", image_type),
        plot = ro_plot,
