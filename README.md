@@ -8,4 +8,5 @@ The markdown file contains the R code for the figures.
 
 The subfolders contain all figures in three languages: Romanian, Hungarian, and English.
 
-Please refer to this work as Endre Borbáth, 2019. "Public Opinion Polls for the 2019 Romanian Presidential Elections" https://github.com/eborbath/ro_poll_pres_2019
+Please refer to this work as:
+Endre Borbáth, 2019. "Public Opinion Polls for the 2019 Romanian Presidential Elections" https://github.com/eborbath/ro_poll_pres_2019
