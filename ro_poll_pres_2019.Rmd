@@ -1,0 +1,238 @@
+---
+title: "Public Opnion Polls for the Romanian presidential elections in 2019"
+author: "Endre Borbáth"
+date: "02/11/2019"
+output: ioslides_presentation
+---
+
+## Overall
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+library(readxl)
+library(dplyr)
+library(here)
+library(ggplot2)
+library(ggthemes)
+library(scales)
+theme_set(theme_fivethirtyeight() +  
+          theme(axis.title.x=element_blank(),
+        # axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.title = element_blank(),
+        legend.position="bottom", 
+        legend.direction="horizontal",
+        legend.margin=margin(t = 0, unit='cm'),
+        legend.key.width = unit(1.5,"cm")))
+
+dr_here()
+image_type <- ".jpeg"
+path <- paste0(getwd(), "/")
+dat <- read_excel(paste0(path, "RO_polls_presidential_2019.xlsx"))
+
+
+dat <- dat %>%
+  filter(is.na(Notes)) %>% # dropping the "irregular" polls
+  mutate(`Polling company`=factor(`Polling company`),
+         `Fieldwork end data`=as.Date(`Fieldwork end data`))
+
+Dancila <- paste0("D", sprintf('\u0103'), "ncil", sprintf('\u0103'))
+
+ggplot(dat, aes(x=`Fieldwork end data`)) +
+  geom_point(aes(y=`Klaus Iohannis`, color="Iohannis")) +
+  geom_smooth(aes(y=`Klaus Iohannis`, color="Iohannis"), se=FALSE) +
+  geom_point(aes(y=`Viorica Dăncilă`, color=Dancila)) +
+  geom_smooth(aes(y=`Viorica Dăncilă`, color=Dancila), se=FALSE) +
+  geom_point(aes(y=`Mircea Diaconu`, color="Diaconu")) +
+  geom_smooth(aes(y=`Mircea Diaconu`, color="Diaconu"), se=FALSE) +
+  geom_point(aes(y=`Dan Barna`, color="Barna")) +
+  geom_smooth(aes(y=`Dan Barna`, color="Barna"), se=FALSE) +
+  geom_point(aes(y=`Theodor Paleologu`, color="Paleologu")) +
+  geom_smooth(aes(y=`Theodor Paleologu`, color="Paleologu"), se=FALSE) +
+    geom_point(aes(y=`Kelemen Hunor`, color="Kelemen")) +
+  geom_smooth(aes(y=`Kelemen Hunor`, color="Kelemen"), se=FALSE) +
+  scale_colour_manual("",   limits=c("Iohannis", Dancila, "Barna", "Diaconu", "Paleologu", "Kelemen"),
+                      values = c("#cc9900", "#C1333C", "#FF4F01", "black", "#0863B2", "#038139")) +
+  scale_x_date(labels = date_format("%b-%y")) +
+  ggtitle("Standing of Presidential Candidates before the Ist Round") +
+          guides(color=guide_legend(ncol=6))
+
+ggsave(paste0("overall", image_type),
+       plot = last_plot(),
+       path=path,
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+```
+
+## First Place
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggplot(dat, aes(x=`Fieldwork end data`)) +
+  geom_point(aes(y=`Klaus Iohannis`, shape=`Polling company`), color="#cc9900") +
+  geom_smooth(aes(y=`Klaus Iohannis`), color="#cc9900", se=FALSE) +
+  scale_x_date(labels = date_format("%b-%y")) +
+  scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
+  ggtitle("Standing of Iohannis before the Ist Round") +
+  guides(color=guide_legend(ncol=6))
+
+ggsave(paste0("iohannis", image_type),
+       plot = last_plot(),
+       path=path,
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+```
+
+## Second place
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggplot(dat, aes(x=`Fieldwork end data`)) +
+  geom_point(aes(y=`Viorica Dăncilă`, shape=`Polling company`)) +
+  geom_smooth(aes(y=`Viorica Dăncilă`, color=Dancila), se=FALSE) +
+  geom_point(aes(y=`Dan Barna`, shape=`Polling company`)) +
+  geom_smooth(aes(y=`Dan Barna`, color="Barna"), se=FALSE) +
+  geom_point(aes(y=`Mircea Diaconu`, shape=`Polling company`)) +
+  geom_smooth(aes(y=`Mircea Diaconu`, color="Diaconu"), se=FALSE) +
+  scale_x_date(labels = date_format("%b-%y")) +
+  scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
+  scale_colour_manual("",   limits=c(Dancila, "Barna", "Diaconu"),
+                      values = c("#C1333C", "#FF4F01", "black")) +
+  ggtitle(paste0("Standing of ", Dancila, ", Barna, and Diaconu before the Ist Round")) +
+  guides(color=guide_legend(ncol=3, order = 1))
+
+ggsave(paste0("second_place", image_type),
+       plot = last_plot(),
+       path=path,
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+```
+
+## Third Place
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggplot(dat, aes(x=`Fieldwork end data`)) +
+  geom_point(aes(y=`Theodor Paleologu`, shape=`Polling company`)) +
+  geom_smooth(aes(y=`Theodor Paleologu`, color="Paleologu"), se=FALSE) +
+  geom_point(aes(y=`Kelemen Hunor`, shape=`Polling company`)) +
+  geom_smooth(aes(y=`Kelemen Hunor`, color="Kelemen"), se=FALSE) +
+  scale_x_date(labels = date_format("%b-%y")) +
+  scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
+  scale_colour_manual("",   limits=c("Paleologu", "Kelemen"),
+                      values = c("#0863B2", "#038139")) +
+  ggtitle("Standing of Paleologu and Kelemen before the Ist Round") +
+  guides(color=guide_legend(ncol=2, order = 1)) +
+  ylim(0, 8)
+
+ggsave(paste0("third_place", image_type),
+       plot = last_plot(),
+       path=path,
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+```
+
+## Dăncilă
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggplot(dat, aes(x=`Fieldwork end data`)) +
+  geom_point(aes(y=`Viorica Dăncilă`, shape=`Polling company`)) +
+  geom_smooth(aes(y=`Viorica Dăncilă`), color="#C1333C", se=FALSE, ) +
+  scale_x_date(labels = date_format("%b-%y")) +
+  scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
+  ggtitle(paste0("Standing of ", Dancila, " before the Ist Round")) +
+  guides(color=guide_legend(ncol=3, order = 1))
+
+ggsave(paste0("Dancila", image_type),
+       plot = last_plot(),
+       path=path,
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+```
+
+
+## Barna
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggplot(dat, aes(x=`Fieldwork end data`)) +
+  geom_point(aes(y=`Dan Barna`, shape=`Polling company`)) +
+  geom_smooth(aes(y=`Dan Barna`), color="#FF4F01" , se=FALSE) +
+  scale_x_date(labels = date_format("%b-%y")) +
+  scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
+  ggtitle(paste0("Standing of Barna before the Ist Round")) +
+  guides(color=guide_legend(ncol=3, order = 1))
+
+ggsave(paste0("Barna", image_type),
+       plot = last_plot(),
+       path=path,
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+```
+
+## Diaconu
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggplot(dat, aes(x=`Fieldwork end data`)) +
+  geom_point(aes(y=`Mircea Diaconu`, shape=`Polling company`)) +
+  geom_smooth(aes(y=`Mircea Diaconu`), color="black" , se=FALSE) +
+  scale_x_date(labels = date_format("%b-%y")) +
+  scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
+  ggtitle(paste0("Standing of Diaconu before the Ist Round")) +
+  guides(color=guide_legend(ncol=3, order = 1))
+
+ggsave(paste0("Diaconu", image_type),
+       plot = last_plot(),
+       path=path,
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+```
+
+## Paleologu
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggplot(dat, aes(x=`Fieldwork end data`)) +
+  geom_point(aes(y=`Theodor Paleologu`, shape=`Polling company`)) +
+  geom_smooth(aes(y=`Theodor Paleologu`), color="#0863B2" , se=FALSE) +
+  scale_x_date(labels = date_format("%b-%y")) +
+  scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
+  ggtitle("Standing of Paleologu before the Ist Round") +
+  guides(color=guide_legend(ncol=2, order = 1)) 
+
+ggsave(paste0("Paleologu", image_type),
+       plot = last_plot(),
+       path=path,
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+```
+
+## Kelemen
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggplot(dat, aes(x=`Fieldwork end data`)) +
+  geom_point(aes(y=`Kelemen Hunor`, shape=`Polling company`)) +
+  geom_smooth(aes(y=`Kelemen Hunor`), se=FALSE, color="#038139") +
+  scale_x_date(labels = date_format("%b-%y")) +
+  scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
+  ggtitle("Standing of Kelemen before the Ist Round") +
+  guides(color=guide_legend(ncol=2, order = 1)) +
+  ylim(0, 4.5)
+
+ggsave(paste0("Kelemen", image_type),
+       plot = last_plot(),
+       path=path,
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+```
+
+## Cumpănasu
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggplot(dat, aes(x=`Fieldwork end data`)) +
+  geom_point(aes(y=`Alexandru Cumpănasu`, shape=`Polling company`, color="Cumpănașu"), color="#C1333C") +
+  scale_x_date(labels = date_format("%b-%y")) +
+  scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
+  ggtitle(paste0("Standing of Cump", sprintf('\u0103'), "nașu before the Ist Round")) +
+  ylim(0, 4)
+
+ggsave(paste0("other_candidates", image_type),
+       plot = last_plot(),
+       path=path,
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+```
