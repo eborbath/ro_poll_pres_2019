@@ -30,17 +30,20 @@ dat <- read_excel(paste0(path, "RO_polls_presidential_2019.xlsx"))
 
 
 dat <- dat %>%
-  filter(is.na(Notes)) %>% # dropping the "irregular" polls
+  filter(is.na(`Not included in the calculations`)) %>% # dropping the "irregular" polls
   mutate(`Polling company`=factor(`Polling company`),
          `Fieldwork end data`=as.Date(`Fieldwork end data`))
+
+colnames(dat[,9]) <- "Viorica Dancila"
+colnames(dat[,14]) <- "Alexandru Cumpanasu"
 
 Dancila <- paste0("D", sprintf('\u0103'), "ncil", sprintf('\u0103'))
 
 plot <-  ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Klaus Iohannis`, color="Iohannis")) +
   geom_smooth(aes(y=`Klaus Iohannis`, color="Iohannis"), se=FALSE) +
-  geom_point(aes(y=`Viorica Dăncilă`, color=Dancila)) +
-  geom_smooth(aes(y=`Viorica Dăncilă`, color=Dancila), se=FALSE) +
+  geom_point(aes(y=`Viorica Dancila`, color=Dancila)) +
+  geom_smooth(aes(y=`Viorica Dancila`, color=Dancila), se=FALSE) +
   geom_point(aes(y=`Mircea Diaconu`, color="Diaconu")) +
   geom_smooth(aes(y=`Mircea Diaconu`, color="Diaconu"), se=FALSE) +
   geom_point(aes(y=`Dan Barna`, color="Barna")) +
@@ -161,8 +164,8 @@ en_plot
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
-  geom_point(aes(y=`Viorica Dăncilă`, shape=`Polling company`, color=Dancila)) +
-  geom_smooth(aes(y=`Viorica Dăncilă`, color=Dancila), se=FALSE) +
+  geom_point(aes(y=`Viorica Dancila`, shape=`Polling company`, color=Dancila)) +
+  geom_smooth(aes(y=`Viorica Dancila`, color=Dancila), se=FALSE) +
   geom_point(aes(y=`Dan Barna`, shape=`Polling company`, color="Barna")) +
   geom_smooth(aes(y=`Dan Barna`, color="Barna"), se=FALSE) +
   geom_point(aes(y=`Mircea Diaconu`, shape=`Polling company`, color="Diaconu")) +
@@ -281,12 +284,12 @@ en_plot
 
 ```
 
-## Dăncilă
+## Dancila
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
-  geom_point(aes(y=`Viorica Dăncilă`, shape=`Polling company`), color="#C1333C") +
-  geom_smooth(aes(y=`Viorica Dăncilă`), color="#C1333C", se=FALSE, ) +
+  geom_point(aes(y=`Viorica Dancila`, shape=`Polling company`), color="#C1333C") +
+  geom_smooth(aes(y=`Viorica Dancila`), color="#C1333C", se=FALSE, ) +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
   guides(color=guide_legend(ncol=3, order = 1)) +
@@ -558,7 +561,7 @@ en_plot
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
-  geom_point(aes(y=`Alexandru Cumpănasu`, shape=`Polling company`, color="Cumpănașu"), color="#C1333C") +
+  geom_point(aes(y=`Alexandru Cumpanasu`, shape=`Polling company`), color="#C1333C") +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual(values=1:nlevels(dat$`Polling company`)) +
   ylim(0, 4) +
