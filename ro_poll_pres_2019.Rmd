@@ -2,12 +2,14 @@
 title: "Public Opnion Polls for the Romanian presidential elections in 2019"
 author: "Endre Borbáth"
 date: "02/11/2019"
-output: ioslides_presentation
+output: 
+  html_document:
+    df_print: paged
 ---
 
 ## Overall
 
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
+```{r}
 rm(list = ls())
 
 library(readxl)
@@ -28,7 +30,7 @@ theme_set(theme_fivethirtyeight() +
 image_type <- ".jpeg"
 path <- paste0(here(), "/")
 dat <- read_excel(paste0(path, "RO_polls_presidential_2019.xlsx"))
-results <- read_excel(paste0(path, "results.xlsx"))
+results <- read_excel(paste0(path, "official_results\\results.xlsx"))
 
 
 dat <- dat %>%
@@ -149,7 +151,7 @@ en_plot
 ```
 
 ## only the results in Romania
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
+```{r}
 
 plot <- ggplot(predicted, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Klaus Iohannis`, color="Iohannis")) +
@@ -193,9 +195,9 @@ en_plot <- plot + ggtitle("Standing of Presidential Candidates before the Ist Ro
   geom_text(aes(x=as.Date("2019-11-11"), y=30, label="Election day"), color="black", angle = 90)
   
 
-ggsave(paste0("overall", image_type),
+ggsave(paste0("overall_only_RO", image_type),
        plot = en_plot,
-       path=paste0(path, "only_RO//en_figures/"),
+       path=paste0(path, "en_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
@@ -208,9 +210,9 @@ hu_plot <- plot + ggtitle(paste0("Az elnökjelöltek állása az els", sprintf('
   geom_text(aes(x=as.Date("2019-10-11"), y=30, label=paste0("kormány")), color="black", angle = 90) +
   geom_text(aes(x=as.Date("2019-11-11"), y=29.5, label="Választási nap"), color="black", angle = 90)
 
-ggsave(paste0("overall", image_type),
+ggsave(paste0("overall_only_RO", image_type),
        plot = hu_plot,
-       path=paste0(path, "only_RO//hu_figures/"),
+       path=paste0(path, "hu_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
@@ -224,9 +226,9 @@ ro_plot <- plot + ggtitle("Candidați pentru alegerile prezidențiale înainte d
   geom_text(aes(x=as.Date("2019-10-11"), y=30, label=paste0("este demis")), color="black", angle = 90)  +
   geom_text(aes(x=as.Date("2019-11-11"), y=29.5, label="Ziua alegerilor"), color="black", angle = 90)
 
-ggsave(paste0("overall", image_type),
+ggsave(paste0("overall_only_RO", image_type),
        plot = ro_plot,
-       path=paste0(path, "only_RO//ro_figures/"),
+       path=paste0(path, "ro_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
@@ -240,7 +242,7 @@ en_plot
 
 ## First Place
 
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
+```{r}
 
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Klaus Iohannis`, shape=`Polling company`), color="#cc9900",
@@ -252,12 +254,12 @@ plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_hline(aes(yintercept=results$I_round_national_percent[results$Candidate=="Iohannis"]),
              linetype="dashed") +
   geom_hline(aes(yintercept=results$I_round_total_percent[results$Candidate=="Iohannis"]),
-             linetype="dashed") 
+             linetype="dashed") + ylim(35, 50)
 
 en_plot <- plot + ggtitle("Standing of Klaus Iohannis before the Ist Round")  +
-  geom_text(aes(x=as.Date("2019-10-1"), y=results$I_round_national_percent[results$Candidate=="Iohannis"]+0.4,
+  geom_text(aes(x=as.Date("2019-09-1"), y=results$I_round_national_percent[results$Candidate=="Iohannis"]+0.4,
                 label="National vote share"), color="black") +
-  geom_text(aes(x=as.Date("2019-10-1"), y=results$I_round_total_percent[results$Candidate=="Iohannis"]+0.4,
+  geom_text(aes(x=as.Date("2019-09-1"), y=results$I_round_total_percent[results$Candidate=="Iohannis"]+0.4,
                 label="Final vote share"), color="black") 
 
 ggsave(paste0("iohannis", image_type),
@@ -267,9 +269,9 @@ ggsave(paste0("iohannis", image_type),
        width=20.85, height=14.05, units="cm")
 
 hu_plot <- plot + ggtitle(paste0("Klaus Iohannis állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt"))  +
-  geom_text(aes(x=as.Date("2019-10-1"), y=results$I_round_national_percent[results$Candidate=="Iohannis"]+0.4,
+  geom_text(aes(x=as.Date("2019-09-1"), y=results$I_round_national_percent[results$Candidate=="Iohannis"]+0.4,
                 label="Országos eredmény"), color="black") +
-  geom_text(aes(x=as.Date("2019-10-1"), y=results$I_round_total_percent[results$Candidate=="Iohannis"]+0.4,
+  geom_text(aes(x=as.Date("2019-09-1"), y=results$I_round_total_percent[results$Candidate=="Iohannis"]+0.4,
                 label="Végleges eredmény"), color="black")
 
 ggsave(paste0("iohannis", image_type),
@@ -279,9 +281,9 @@ ggsave(paste0("iohannis", image_type),
        width=20.85, height=14.05, units="cm")
 
 ro_plot <- plot + ggtitle("Klaus Iohannis înainte de turul I.") +
-  geom_text(aes(x=as.Date("2019-10-1"), y=results$I_round_national_percent[results$Candidate=="Iohannis"]+0.4,
+  geom_text(aes(x=as.Date("2019-09-1"), y=results$I_round_national_percent[results$Candidate=="Iohannis"]+0.4,
                 label="Rezultate naționale"), color="black") +
-  geom_text(aes(x=as.Date("2019-10-1"), y=results$I_round_total_percent[results$Candidate=="Iohannis"]+0.4,
+  geom_text(aes(x=as.Date("2019-09-1"), y=results$I_round_total_percent[results$Candidate=="Iohannis"]+0.4,
                 label="Rezultate finale"), color="black")
 
 ggsave(paste0("iohannis", image_type),
@@ -295,7 +297,7 @@ en_plot
 
 ## Second place
 
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
+```{r}
 plot <- ggplot(predicted, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Viorica Dancila`, shape=`Polling company`, color=Dancila), fill="#C1333C") +
   geom_line(aes(y=`pr_Viorica Dancila`, color=Dancila)) +
@@ -311,7 +313,7 @@ plot <- ggplot(predicted, aes(x=`Fieldwork end data`)) +
   geom_vline(xintercept = as.numeric(as.Date("2019-09-22")), linetype="dashed") +
   geom_vline(xintercept = as.numeric(as.Date("2019-10-10")), linetype="dashed") +
   geom_vline(xintercept = as.numeric(as.Date("2019-11-10")), linetype="dashed") +
-  ylim(0, NA)  +
+  ylim(0, 30)  +
   scale_x_date(labels = date_format("%b-%y")) +
   geom_point(aes(x=as.Date("2019-11-10"),
                y=results$I_round_total_percent[results$Candidate=="Dancila"], color=Dancila), shape=8, size=4, show.legend=FALSE) +
@@ -323,10 +325,10 @@ plot <- ggplot(predicted, aes(x=`Fieldwork end data`)) +
 en_plot <- plot + ggtitle(paste0("Standing of ", Dancila, ", Barna, and Diaconu before the Ist Round")) +
   geom_text(aes(x=as.Date("2019-08-25"), y=6, label="ALDE leaves the gov."), color="black", angle = 90) +
   geom_text(aes(x=as.Date("2019-09-21"), y=4.5, label="List of candidates"), color="black", angle = 90) +
-  geom_text(aes(x=as.Date("2019-09-23"), y=4.5, label="finalized"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=3, label="finalized"), color="black", angle = 90) +
   geom_text(aes(x=as.Date("2019-10-09"), y=5, label=paste0(Dancila, " ousted")), color="black", angle = 90) +
   geom_text(aes(x=as.Date("2019-10-11"), y=5, label="as PM"), color="black", angle = 90)  +
-  geom_text(aes(x=as.Date("2019-11-11"), y=4, label="Election day"), color="black", angle = 90)
+  geom_text(aes(x=as.Date("2019-11-11"), y=3.5, label="Election day"), color="black", angle = 90)
 
 ggsave(paste0("second_place", image_type),
        plot = en_plot,
@@ -335,12 +337,13 @@ ggsave(paste0("second_place", image_type),
        width=20.85, height=14.05, units="cm")
 
 hu_plot <- plot + ggtitle(paste0(Dancila, ", Barna, és Diaconu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) +
-  geom_text(aes(x=as.Date("2019-08-25"), y=6, label="Az ALDE kilép a kormányból"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=25, label="Az ALDE kilép a"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-08-27"), y=25, label="kormányból"), color="black", angle = 90) +
   geom_text(aes(x=as.Date("2019-09-21"), y=4.5, label="Végleges lista a"), color="black", angle = 90) +
-  geom_text(aes(x=as.Date("2019-09-23"), y=4.5, label=paste0("jelöltekr", sprintf('\u0151'), "l")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=3, label=paste0("jelöltekr", sprintf('\u0151'), "l")), color="black", angle = 90) +
   geom_text(aes(x=as.Date("2019-10-09"), y=5, label=paste0("Megbukik a ", Dancila)), color="black", angle = 90) +
   geom_text(aes(x=as.Date("2019-10-11"), y=5, label=paste0("kormány")), color="black", angle = 90)  +
-  geom_text(aes(x=as.Date("2019-11-11"), y=4, label="Választási nap"), color="black", angle = 90)
+  geom_text(aes(x=as.Date("2019-11-11"), y=3.5, label="Választási nap"), color="black", angle = 90)
 
 
 ggsave(paste0("second_place", image_type),
@@ -350,12 +353,13 @@ ggsave(paste0("second_place", image_type),
        width=20.85, height=14.05, units="cm")
 
 ro_plot <- plot + ggtitle(paste0(Dancila, ", Barna, și Diaconu înainte de turul I.")) +
-  geom_text(aes(x=as.Date("2019-08-25"), y=6, label="ALDE iese de la guvernare"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=5, label="ALDE iese de la"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-08-27"), y=4, label="guvernare"), color="black", angle = 90) +
   geom_text(aes(x=as.Date("2019-09-21"), y=5.5, label=paste0("Termenul-limit", sprintf('\u0103'), " ptr.")), color="black", angle = 90) +
-  geom_text(aes(x=as.Date("2019-09-23"), y=5.5, label="depunerea candidaturilor"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=5.5, label="depunerea candid."), color="black", angle = 90) +
   geom_text(aes(x=as.Date("2019-10-09"), y=5, label=paste0("Guvernul ", Dancila)), color="black", angle = 90) +
   geom_text(aes(x=as.Date("2019-10-11"), y=5, label=paste0("este demis")), color="black", angle = 90)   +
-  geom_text(aes(x=as.Date("2019-11-11"), y=4, label="Ziua alegerilor"), color="black", angle = 90)
+  geom_text(aes(x=as.Date("2019-11-11"), y=3.5, label="Ziua alegerilor"), color="black", angle = 90)
 
 ggsave(paste0("second_place", image_type),
        plot = ro_plot,
@@ -368,7 +372,7 @@ en_plot
 
 ## Third Place
 
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
+```{r}
 plot <- ggplot(predicted, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Theodor Paleologu`, shape=`Polling company`, color="Paleologu"), fill="#0863B2") +
   geom_line(aes(y=`pr_Theodor Paleologu`, color="Paleologu")) +
@@ -379,7 +383,7 @@ plot <- ggplot(predicted, aes(x=`Fieldwork end data`)) +
   scale_colour_manual("",   limits=c("Paleologu", "Kelemen"),
                       values = c("#0863B2", "#038139")) +
   guides(color=guide_legend(ncol=2, order = 1)) +
-  ylim(0, 8) +
+  ylim(0, 10) +
   geom_vline(xintercept = as.numeric(as.Date("2019-08-26")), linetype="dashed") +
   geom_vline(xintercept = as.numeric(as.Date("2019-09-22")), linetype="dashed") +
   geom_vline(xintercept = as.numeric(as.Date("2019-10-10")), linetype="dashed") +
@@ -391,11 +395,11 @@ plot <- ggplot(predicted, aes(x=`Fieldwork end data`)) +
   
 
 en_plot <- plot + ggtitle("Standing of Paleologu and Kelemen before the Ist Round") +
-  geom_text(aes(x=as.Date("2019-08-25"), y=4, label="ALDE leaves the gov."), color="black", angle = 90) +
-  geom_text(aes(x=as.Date("2019-09-21"), y=1.2, label="List of candidates"), color="black", angle = 90) +
-  geom_text(aes(x=as.Date("2019-09-23"), y=1.2, label="finalized"), color="black", angle = 90) +
-  geom_text(aes(x=as.Date("2019-10-09"), y=1.2, label=paste0(Dancila, " ousted")), color="black", angle = 90) +
-  geom_text(aes(x=as.Date("2019-10-11"), y=1.2, label="as PM"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=7.5, label="ALDE leaves the gov."), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=7.5, label="List of candidates"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=7.5, label="finalized"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=2, label=paste0(Dancila, " ousted")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=2, label="as PM"), color="black", angle = 90) +
   geom_text(aes(x=as.Date("2019-11-11"), y=1.2, label="Election day"), color="black", angle = 90)
 
 ggsave(paste0("third_place", image_type),
@@ -405,11 +409,12 @@ ggsave(paste0("third_place", image_type),
        width=20.85, height=14.05, units="cm")
 
 hu_plot <- plot + ggtitle(paste0("Paleologu és Kelemen állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) + 
-  geom_text(aes(x=as.Date("2019-08-25"), y=5, label="Az ALDE kilép a kormányból"), color="black", angle = 90) +
-  geom_text(aes(x=as.Date("2019-09-21"), y=1.2, label="Végleges lista a"), color="black", angle = 90) +
-  geom_text(aes(x=as.Date("2019-09-23"), y=1.2, label=paste0("jelöltekr", sprintf('\u0151'), "l")), color="black", angle = 90) +
-  geom_text(aes(x=as.Date("2019-10-09"), y=1.5, label=paste0("Megbukik a ", Dancila)), color="black", angle = 90) +
-  geom_text(aes(x=as.Date("2019-10-11"), y=1.5, label=paste0("kormány")), color="black", angle = 90)
+  geom_text(aes(x=as.Date("2019-08-25"), y=7, label="Az ALDE kilép a kormányból"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=8, label="Végleges lista a"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=8, label=paste0("jelöltekr", sprintf('\u0151'), "l")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-09"), y=1.5, label=paste0("Megbukik a")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-10-11"), y=1.5, label=paste0(Dancila, " kormány")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-11-11"), y=1, label="Választási nap"), color="black", angle = 90)
 
 ggsave(paste0("third_place", image_type),
        plot = hu_plot,
@@ -418,11 +423,12 @@ ggsave(paste0("third_place", image_type),
        width=20.85, height=14.05, units="cm")
 
 ro_plot <- plot + ggtitle(paste0("Paleologu și Kelemen înainte de turul I."))  +
-  geom_text(aes(x=as.Date("2019-08-25"), y=5, label="ALDE iese de la guvernare"), color="black", angle = 90) +
-  geom_text(aes(x=as.Date("2019-09-21"), y=2.3, label=paste0("Termenul-limit", sprintf('\u0103'), " ptr. depunerea")), color="black", angle = 90) +
-  geom_text(aes(x=as.Date("2019-09-23"), y=1.7, label="candidaturilor"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-08-25"), y=7, label="ALDE iese de la guvernare"), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-21"), y=8, label=paste0("Termenul-limit", sprintf('\u0103'), " ptr.")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-09-23"), y=8, label="depunerea cand."), color="black", angle = 90) +
   geom_text(aes(x=as.Date("2019-10-09"), y=1.5, label=paste0("Guvernul ", Dancila)), color="black", angle = 90) +
-  geom_text(aes(x=as.Date("2019-10-11"), y=1.5, label=paste0("este demis")), color="black", angle = 90)
+  geom_text(aes(x=as.Date("2019-10-11"), y=1.5, label=paste0("este demis")), color="black", angle = 90) +
+  geom_text(aes(x=as.Date("2019-11-11"), y=1, label="Ziua alegerilor"), color="black", angle = 90)
 
 ggsave(paste0("third_place", image_type),
        plot = ro_plot,
@@ -436,7 +442,7 @@ en_plot
 
 ## Dancila
 
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
+```{r}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Viorica Dancila`, shape=`Polling company`), color="#C1333C", fill="#C1333C") +
   geom_smooth(aes(y=`Viorica Dancila`), color="#C1333C", se=FALSE) +
@@ -446,12 +452,12 @@ plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_hline(aes(yintercept=results$I_round_national_percent[results$Candidate=="Dancila"]),
              linetype="dashed") +
   geom_hline(aes(yintercept=results$I_round_total_percent[results$Candidate=="Dancila"]),
-             linetype="dashed") 
+             linetype="dashed") + ylim(0,25)
 
 en_plot <- plot + ggtitle(paste0("Standing of ", Dancila, " before the Ist Round")) +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Dancila"]-0.4,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Dancila"]-0.5,
                 label="National vote share"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Dancila"]-0.4,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Dancila"]-0.5,
                 label="Final vote share"), color="black") 
   
 
@@ -462,9 +468,9 @@ ggsave(paste0("Dancila", image_type),
        width=20.85, height=14.05, units="cm")
 
 hu_plot <- plot + ggtitle(paste0(Dancila, " állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) + 
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Dancila"]-0.4,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Dancila"]-0.5,
                 label="Országos eredmény"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Dancila"]-0.4,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Dancila"]-0.5,
                 label="Végleges eredmény"), color="black")
 
 ggsave(paste0("Dancila", image_type),
@@ -474,9 +480,9 @@ ggsave(paste0("Dancila", image_type),
        width=20.85, height=14.05, units="cm")
 
 ro_plot <- plot + ggtitle(paste0(Dancila, " înainte de turul I.")) +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Dancila"]-0.4,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Dancila"]-0.5,
                 label="Rezultate naționale"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Dancila"]-0.4,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Dancila"]-0.5,
                 label="Rezultate finale"), color="black")
 
 ggsave(paste0("Dancila", image_type),
@@ -491,7 +497,7 @@ en_plot
 
 ## Barna
 
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
+```{r}
 plot <- plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Dan Barna`, shape=`Polling company`), color="#FF4F01", fill="#FF4F01") +
   geom_smooth(aes(y=`Dan Barna`), color="#FF4F01" , se=FALSE) +
@@ -501,12 +507,12 @@ plot <- plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_hline(aes(yintercept=results$I_round_national_percent[results$Candidate=="Barna"]),
              linetype="dashed") +
   geom_hline(aes(yintercept=results$I_round_total_percent[results$Candidate=="Barna"]),
-             linetype="dashed") 
+             linetype="dashed") + ylim(0,25)
 
 en_plot <- plot + ggtitle(paste0("Standing of Barna before the Ist Round")) +
-  geom_text(aes(x=as.Date("2019-08-07"), y=results$I_round_national_percent[results$Candidate=="Barna"]-0.3,
+  geom_text(aes(x=as.Date("2019-08-07"), y=results$I_round_national_percent[results$Candidate=="Barna"]+0.5,
                 label="National vote share"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-07"), y=results$I_round_total_percent[results$Candidate=="Barna"]+0.3,
+  geom_text(aes(x=as.Date("2019-08-07"), y=results$I_round_total_percent[results$Candidate=="Barna"]+0.5,
                 label="Final vote share"), color="black") 
 
 ggsave(paste0("Barna", image_type),
@@ -515,9 +521,9 @@ ggsave(paste0("Barna", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-hu_plot <- plot + ggtitle(paste0("Barna állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) +  geom_text(aes(x=as.Date("2019-08-07"), y=results$I_round_national_percent[results$Candidate=="Barna"]-0.3,
+hu_plot <- plot + ggtitle(paste0("Barna állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) +  geom_text(aes(x=as.Date("2019-08-07"), y=results$I_round_national_percent[results$Candidate=="Barna"]+0.5,
                 label="Országos eredmény"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-07"), y=results$I_round_total_percent[results$Candidate=="Barna"]+0.3,
+  geom_text(aes(x=as.Date("2019-08-07"), y=results$I_round_total_percent[results$Candidate=="Barna"]+0.5,
                 label="Végleges eredmény"), color="black")
 
 ggsave(paste0("Barna", image_type),
@@ -527,9 +533,9 @@ ggsave(paste0("Barna", image_type),
        width=20.85, height=14.05, units="cm")
 
 ro_plot <- plot + ggtitle(paste0("Barna înainte de turul I.")) +
-  geom_text(aes(x=as.Date("2019-08-07"), y=results$I_round_national_percent[results$Candidate=="Barna"]-0.3,
+  geom_text(aes(x=as.Date("2019-08-07"), y=results$I_round_national_percent[results$Candidate=="Barna"]+0.5,
                 label="Rezultate naționale"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-07"), y=results$I_round_total_percent[results$Candidate=="Barna"]+0.3,
+  geom_text(aes(x=as.Date("2019-08-07"), y=results$I_round_total_percent[results$Candidate=="Barna"]+0.5,
                 label="Rezultate finale"), color="black")
 
 ggsave(paste0("Barna", image_type),
@@ -543,7 +549,7 @@ en_plot
 
 ## Diaconu
 
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
+```{r}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Mircea Diaconu`, shape=`Polling company`), color="black", fill="black") +
   geom_smooth(aes(y=`Mircea Diaconu`), color="black" , se=FALSE) +
@@ -553,12 +559,12 @@ plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_hline(aes(yintercept=results$I_round_national_percent[results$Candidate=="Diaconu"]),
              linetype="dashed") +
   geom_hline(aes(yintercept=results$I_round_total_percent[results$Candidate=="Diaconu"]),
-             linetype="dashed") 
+             linetype="dashed") + ylim(0,25)
 
 en_plot <- plot + ggtitle(paste0("Standing of Diaconu before the Ist Round")) +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Diaconu"]+0.3,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Diaconu"]+0.5,
                 label="National vote share"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Diaconu"]+0.3,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Diaconu"]-0.5,
                 label="Final vote share"), color="black") 
 
 
@@ -568,9 +574,9 @@ ggsave(paste0("Diaconu", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-hu_plot <- plot + ggtitle(paste0("Diaconu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) + geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Diaconu"]+0.3,
+hu_plot <- plot + ggtitle(paste0("Diaconu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) + geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Diaconu"]+0.5,
                 label="Országos eredmény"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Diaconu"]+0.3,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Diaconu"]-0.5,
                 label="Végleges eredmény"), color="black")
 
 
@@ -581,9 +587,9 @@ ggsave(paste0("Diaconu", image_type),
        width=20.85, height=14.05, units="cm")
 
 ro_plot <- plot + ggtitle(paste0("Diaconu înainte de turul I.")) +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Diaconu"]+0.3,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Diaconu"]+0.5,
                 label="Rezultate naționale"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Diaconu"]+0.3,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Diaconu"]-0.5,
                 label="Rezultate finale"), color="black")
 
 ggsave(paste0("Diaconu", image_type),
@@ -597,7 +603,7 @@ en_plot
 
 ## Paleologu
 
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
+```{r}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Theodor Paleologu`, shape=`Polling company`), color="#0863B2", fill="#0863B2") +
   geom_smooth(aes(y=`Theodor Paleologu`), color="#0863B2", se=FALSE) +
@@ -607,12 +613,12 @@ plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_hline(aes(yintercept=results$I_round_national_percent[results$Candidate=="Paleologu"]),
              linetype="dashed") +
   geom_hline(aes(yintercept=results$I_round_total_percent[results$Candidate=="Paleologu"]),
-             linetype="dashed") 
+             linetype="dashed") + ylim(0,10)
 
 en_plot <- plot + ggtitle(paste0("Standing of Paleologu before the Ist Round")) +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Paleologu"]+0.15,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Paleologu"]-0.2,
                 label="National vote share"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Paleologu"]-0.15,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Paleologu"]+0.2,
                 label="Final vote share"), color="black") 
 
 ggsave(paste0("Paleologu", image_type),
@@ -621,9 +627,9 @@ ggsave(paste0("Paleologu", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-hu_plot <- plot + ggtitle(paste0("Paleologu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) + geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Paleologu"]+0.15,
+hu_plot <- plot + ggtitle(paste0("Paleologu állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) + geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Paleologu"]-0.2,
                 label="Országos eredmény"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Paleologu"]-0.15,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Paleologu"]+0.2,
                 label="Végleges eredmény"), color="black")
 
 ggsave(paste0("Paleologu", image_type),
@@ -633,9 +639,9 @@ ggsave(paste0("Paleologu", image_type),
        width=20.85, height=14.05, units="cm")
 
 ro_plot <- plot + ggtitle(paste0("Paleologu înainte de turul I.")) +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Paleologu"]+0.15,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_national_percent[results$Candidate=="Paleologu"]-0.2,
                 label="Rezultate naționale"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Paleologu"]-0.15,
+  geom_text(aes(x=as.Date("2019-08-15"), y=results$I_round_total_percent[results$Candidate=="Paleologu"]+0.2,
                 label="Rezultate finale"), color="black")
 
 ggsave(paste0("Paleologu", image_type),
@@ -649,23 +655,23 @@ en_plot
 
 ## Kelemen
 
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
+```{r}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Kelemen Hunor`, shape=`Polling company`), color="#038139", fill="#038139") +
   geom_smooth(aes(y=`Kelemen Hunor`), se=FALSE, color="#038139") +
   scale_x_date(labels = date_format("%b-%y")) +
   scale_shape_manual("legend", values=c(21, 22, 0, 8, 1, 25, 24, 13, 3)) +
   guides(color=guide_legend(ncol=2, order = 1)) +
-  ylim(0, 4.5) +
+  ylim(0, 10) +
   geom_hline(aes(yintercept=results$I_round_national_percent[results$Candidate=="Kelemen"]),
              linetype="dashed") +
   geom_hline(aes(yintercept=results$I_round_total_percent[results$Candidate=="Kelemen"]),
              linetype="dashed") 
 
 en_plot <- plot + ggtitle(paste0("Standing of Kelemen before the Ist Round")) +
-  geom_text(aes(x=as.Date("2019-08-20"), y=results$I_round_national_percent[results$Candidate=="Kelemen"]+0.15,
+  geom_text(aes(x=as.Date("2019-08-20"), y=results$I_round_national_percent[results$Candidate=="Kelemen"]+0.2,
                 label="National vote share"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-20"), y=results$I_round_total_percent[results$Candidate=="Kelemen"]+0.15,
+  geom_text(aes(x=as.Date("2019-08-20"), y=results$I_round_total_percent[results$Candidate=="Kelemen"]-0.2,
                 label="Final vote share"), color="black")
 
 ggsave(paste0("Kelemen", image_type),
@@ -674,9 +680,9 @@ ggsave(paste0("Kelemen", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-hu_plot <- plot + ggtitle(paste0("Kelemen állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) + geom_text(aes(x=as.Date("2019-08-20"), y=results$I_round_national_percent[results$Candidate=="Kelemen"]+0.15,
+hu_plot <- plot + ggtitle(paste0("Kelemen állása az els", sprintf('\u0151'), " forduló el", sprintf('\u0151'), "tt")) + geom_text(aes(x=as.Date("2019-08-20"), y=results$I_round_national_percent[results$Candidate=="Kelemen"]+0.2,
                 label="Országos eredmény"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-20"), y=results$I_round_total_percent[results$Candidate=="Kelemen"]+0.15,
+  geom_text(aes(x=as.Date("2019-08-20"), y=results$I_round_total_percent[results$Candidate=="Kelemen"]-0.2,
                 label="Végleges eredmény"), color="black")
 
 ggsave(paste0("Kelemen", image_type),
@@ -686,9 +692,9 @@ ggsave(paste0("Kelemen", image_type),
        width=20.85, height=14.05, units="cm")
 
 ro_plot <- plot + ggtitle(paste0("Kelemen înainte de turul I.")) +
-  geom_text(aes(x=as.Date("2019-08-20"), y=results$I_round_national_percent[results$Candidate=="Kelemen"]+0.15,
+  geom_text(aes(x=as.Date("2019-08-20"), y=results$I_round_national_percent[results$Candidate=="Kelemen"]+0.2,
                 label="Rezultate naționale"), color="black") +
-  geom_text(aes(x=as.Date("2019-08-20"), y=results$I_round_total_percent[results$Candidate=="Kelemen"]+0.15,
+  geom_text(aes(x=as.Date("2019-08-20"), y=results$I_round_total_percent[results$Candidate=="Kelemen"]-0.2,
                 label="Rezultate finale"), color="black")
 
 ggsave(paste0("Kelemen", image_type),
@@ -702,7 +708,7 @@ en_plot
 
 ## Cumpănasu
 
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
+```{r}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Alexandru Cumpanasu`, shape=`Polling company`), color="#C1333C", fill="#C1333C") +
   scale_x_date(labels = date_format("%b-%y")) +
@@ -754,7 +760,7 @@ en_plot
 
 ## Standard error by companies
 
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
+```{r}
 
 library(tidyverse)
 
@@ -791,9 +797,9 @@ sd1 <- dat %>%
 sd2 <- dat %>% 
   select(`Klaus Iohannis`, `Viorica Dăncilă`, `Dan Barna`, `Mircea Diaconu`, `Polling company`) %>% 
   gather(key = "key", value="value", -`Polling company`) %>% 
-  mutate(results=ifelse(key=="Dan Barna", 14.69294487,
-                        ifelse(key=="Mircea Diaconu", 8.703118569,
-                               ifelse(key=="Klaus Iohannis", 37.1250522, 21.91933015)))) %>% 
+  mutate(results=ifelse(key=="Dan Barna", 15.02140451,
+                        ifelse(key=="Mircea Diaconu", 8.845002694,
+                               ifelse(key=="Klaus Iohannis", 37.81572536, 22.26139707)))) %>% 
   group_by(`Polling company`, key) %>% 
   filter(!is.na(value)) %>% 
   mutate(n = n()) %>% 
@@ -809,14 +815,44 @@ sd2 <- dat %>%
 
 sd <- merge(sd1, sd2)
 
-sd <- gather(sd, key="type", value="value", -key)
+sd <- sd %>% 
+  gather(key="type", value="value", -key) %>% 
+  mutate(type=as.factor(type))
 
-sd$type <- ifelse(sd$type=="overall", "final vote share", "national vote share")
+levels(sd$type)[c(2, 1)] <- c("végleges eredményekhez", "országos eredményekhez")
+
+hu_plot <- ggplot(sd) +
+  geom_bar(aes(y=value, x=reorder(key, -value), fill=type), stat="identity", position = "dodge") +
+  coord_flip() + ggtitle(paste0("Átlag hiba a kutatások forrása szerint")) +
+  labs(fill="") + ylab(paste0("átlag szórása a 4 legnépszer", sprintf('\u0171'), "bb jelölt eredményének, hasonlítva az:")) +
+  xlab("")
+
+ggsave(paste0("avrg_error", image_type),
+       plot = hu_plot,
+       path=paste0(path, "hu_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+levels(sd$type)[c(2, 1)] <- c("rezultatele finale", "rezultatele naționale")
+
+ro_plot <- ggplot(sd) +
+  geom_bar(aes(y=value, x=reorder(key, -value), fill=type), stat="identity", position = "dodge") +
+  coord_flip() + ggtitle(paste0("Eroare medie dup", sprintf('\u0103'), " sursa sondajelor")) +
+  labs(fill="") + ylab(paste0("abaterea standard medie a punctajului primilor 4 candidați, relative cu")) +
+  xlab("")
+
+ggsave(paste0("avrg_error", image_type),
+       plot = ro_plot,
+       path=paste0(path, "ro_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+levels(sd$type)[c(2,1)] <- c("final vote share", "national vote share")
 
 en_plot <- ggplot(sd) +
-  geom_bar(aes(y=value, x=reorder(key, value), fill=type), stat="identity", position = "dodge") +
+  geom_bar(aes(y=value, x=reorder(key, -value), fill=type), stat="identity", position = "dodge") +
   coord_flip() + ggtitle(paste0("Average Error by the Source of Polls")) +
-  labs(fill="") + ylab("Average standard deviation of the score of the top 4 candidates, compared to their:") +
+  labs(fill="") + ylab("average standard deviation of the score of the top 4 candidates, compared to their:") +
   xlab("")
 
 en_plot
@@ -827,32 +863,81 @@ ggsave(paste0("avrg_error", image_type),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-sd$type <- ifelse(sd$type=="final vote share", "végleges eredményekhez", "országos eredményekhez")
+```
+# same meassure for the companies in 2014, only taking the national level results
 
-hu_plot <- ggplot(sd) +
-  geom_bar(aes(y=value, x=reorder(key, value), fill=type), stat="identity", position = "dodge") +
-  coord_flip() + ggtitle(paste0("Átlag Hiba a Kutatások Forrása szerint")) +
-  labs(fill="") + ylab(paste0("Átlag szórása a 4 legnépszer", sprintf('\u0171'), "bb jelölt eredményének, hasonlítva az:")) +
-  xlab("")
+```{r}
 
-ggsave(paste0("avrg_error", image_type),
+theme_set(theme_fivethirtyeight() +  
+            theme(axis.title=element_blank(),
+              axis.text.x = element_text(angle = 90, hjust = 1),
+              legend.position="bottom", 
+                  legend.direction="horizontal",
+                  legend.margin=margin(t = 0, unit='cm'),
+                  legend.key.width = unit(1.5,"cm")))
+
+polls14 <- read_excel(paste0(path, "polls_2014//polls_2014.xlsx"))
+
+sd14 <- polls14 %>% 
+  filter(Fieldwork_end>as.Date("2014-08-01")) %>%  # to have the same, comparable period
+  select(`Victor Ponta`, `Klaus Iohannis`, `Elena Udrea`, `Calin Popescu Tariceanu`, Firm) %>% 
+  gather(key = "key", value="value", -`Firm`) %>% 
+  mutate(results=ifelse(key=="Victor Ponta", 40.86342762,
+                        ifelse(key=="Klaus Iohannis", 30.10628641,
+                               ifelse(key=="Elena Udrea", 5.122851605, 5.403057819)))) %>% 
+  group_by(Firm, key) %>% 
+  filter(!is.na(value)) %>% 
+  mutate(n = n()) %>% 
+  mutate(sddev=sqrt(sum((value-results)^2)/n)) %>% 
+  select(Firm, key, sddev) %>% 
+  distinct(.) %>% 
+  spread("Firm", "sddev") %>% 
+  ungroup(.) %>% 
+  select(-key) %>% 
+  summarise_all(mean, na.rm=TRUE) %>% 
+  gather(.) %>% 
+  rename(national=value)
+
+sd1$year <- 2019
+sd14$year <- 2014
+
+stddev <- rbind(sd1, sd14)
+
+stddev <- stddev %>% 
+  mutate(year=as.factor(year)) %>% 
+  mutate(year=relevel(year, ref="2019")) %>% 
+  group_by(year) %>% 
+  mutate(mean=mean(national, na.rm=TRUE))
+
+plot <- ggplot(stddev) +
+  geom_bar(aes(y=national, x=reorder(key, national)), stat="identity") +
+  facet_grid(~year, scales="free_x") +
+  geom_hline(aes(yintercept = mean), linetype="dashed")
+
+hu_plot <- plot + ggtitle(paste0("Átlag szórás a kutatások forrása szerint"))
+
+ggsave(paste0("avrg_error_comp_2014", image_type),
        plot = hu_plot,
        path=paste0(path, "hu_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
 
-sd$type <- ifelse(sd$type=="végleges eredményekhez", "rezultatele finale", "rezultatele naționale")
+ro_plot <- plot + ggtitle(paste0("Abaterea standard medie dup", sprintf('\u0103'), " sursa sondajelor"))
 
-ro_plot <- ggplot(sd) +
-  geom_bar(aes(y=value, x=reorder(key, value), fill=type), stat="identity", position = "dodge") +
-  coord_flip() + ggtitle(paste0("Eroare Medie după sursa Sondajelor")) +
-  labs(fill="") + ylab(paste0("Abaterea standard medie a punctajului primilor 4 candidați, relative cu")) +
-  xlab("")
-
-ggsave(paste0("avrg_error", image_type),
+ggsave(paste0("avrg_error_comp_2014", image_type),
        plot = ro_plot,
        path=paste0(path, "ro_figures/"),
        dpi=335,
        width=20.85, height=14.05, units="cm")
+
+en_plot <- plot + ggtitle(paste0("Average standard deviation by the source of the polls"))
+
+ggsave(paste0("avrg_error_comp_2014", image_type),
+       plot = en_plot,
+       path=paste0(path, "en_figures/"),
+       dpi=335,
+       width=20.85, height=14.05, units="cm")
+
+en_plot
 
 ```
