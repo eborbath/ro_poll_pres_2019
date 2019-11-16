@@ -9,7 +9,7 @@ output:
 
 ## Overall
 
-```{r}
+```{r, warning=FALSE}
 rm(list = ls())
 
 library(readxl)
@@ -151,7 +151,7 @@ en_plot
 ```
 
 ## only the results in Romania
-```{r}
+```{r, warning=FALSE}
 
 plot <- ggplot(predicted, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Klaus Iohannis`, color="Iohannis")) +
@@ -242,7 +242,7 @@ en_plot
 
 ## First Place
 
-```{r}
+```{r, warning=FALSE}
 
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Klaus Iohannis`, shape=`Polling company`), color="#cc9900",
@@ -297,7 +297,7 @@ en_plot
 
 ## Second place
 
-```{r}
+```{r, warning=FALSE}
 plot <- ggplot(predicted, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Viorica Dancila`, shape=`Polling company`, color=Dancila), fill="#C1333C") +
   geom_line(aes(y=`pr_Viorica Dancila`, color=Dancila)) +
@@ -372,7 +372,7 @@ en_plot
 
 ## Third Place
 
-```{r}
+```{r, warning=FALSE}
 plot <- ggplot(predicted, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Theodor Paleologu`, shape=`Polling company`, color="Paleologu"), fill="#0863B2") +
   geom_line(aes(y=`pr_Theodor Paleologu`, color="Paleologu")) +
@@ -442,7 +442,7 @@ en_plot
 
 ## Dancila
 
-```{r}
+```{r, warning=FALSE}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Viorica Dancila`, shape=`Polling company`), color="#C1333C", fill="#C1333C") +
   geom_smooth(aes(y=`Viorica Dancila`), color="#C1333C", se=FALSE) +
@@ -497,7 +497,7 @@ en_plot
 
 ## Barna
 
-```{r}
+```{r, warning=FALSE}
 plot <- plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Dan Barna`, shape=`Polling company`), color="#FF4F01", fill="#FF4F01") +
   geom_smooth(aes(y=`Dan Barna`), color="#FF4F01" , se=FALSE) +
@@ -549,7 +549,7 @@ en_plot
 
 ## Diaconu
 
-```{r}
+```{r, warning=FALSE}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Mircea Diaconu`, shape=`Polling company`), color="black", fill="black") +
   geom_smooth(aes(y=`Mircea Diaconu`), color="black" , se=FALSE) +
@@ -603,7 +603,7 @@ en_plot
 
 ## Paleologu
 
-```{r}
+```{r, warning=FALSE}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Theodor Paleologu`, shape=`Polling company`), color="#0863B2", fill="#0863B2") +
   geom_smooth(aes(y=`Theodor Paleologu`), color="#0863B2", se=FALSE) +
@@ -655,7 +655,7 @@ en_plot
 
 ## Kelemen
 
-```{r}
+```{r, warning=FALSE}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Kelemen Hunor`, shape=`Polling company`), color="#038139", fill="#038139") +
   geom_smooth(aes(y=`Kelemen Hunor`), se=FALSE, color="#038139") +
@@ -708,7 +708,7 @@ en_plot
 
 ## Cumpănasu
 
-```{r}
+```{r, warning=FALSE}
 plot <- ggplot(dat, aes(x=`Fieldwork end data`)) +
   geom_point(aes(y=`Alexandru Cumpanasu`, shape=`Polling company`), color="#C1333C", fill="#C1333C") +
   scale_x_date(labels = date_format("%b-%y")) +
@@ -760,7 +760,7 @@ en_plot
 
 ## Standard error by companies
 
-```{r}
+```{r, warning=FALSE}
 
 library(tidyverse)
 
@@ -864,9 +864,11 @@ ggsave(paste0("avrg_error", image_type),
        width=20.85, height=14.05, units="cm")
 
 ```
-# same meassure for the companies in 2014, only taking the national level results
+# relative comp. to 2014
 
-```{r}
+only taking the national level results
+
+```{r, warning=FALSE}
 
 theme_set(theme_fivethirtyeight() +  
             theme(axis.title=element_blank(),
