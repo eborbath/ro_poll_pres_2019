@@ -30,7 +30,7 @@ theme_set(theme_fivethirtyeight() +
 image_type <- ".jpeg"
 path <- paste0(here(), "/")
 dat <- read_excel(paste0(path, "RO_polls_presidential_2019.xlsx"))
-results <- read_excel(paste0(path, "official_results\\results.xlsx"))
+results <- read_excel(paste0(path, "official_results_Ist_round\\results.xlsx"))
 
 
 dat <- dat %>%
@@ -878,7 +878,7 @@ theme_set(theme_fivethirtyeight() +
                   legend.margin=margin(t = 0, unit='cm'),
                   legend.key.width = unit(1.5,"cm")))
 
-polls14 <- read_excel(paste0(path, "polls_2014//polls_2014.xlsx"))
+polls14 <- read_excel(paste0(path, "polls_results_2014//polls_2014.xlsx"))
 
 sd14 <- polls14 %>% 
   filter(Fieldwork_end>as.Date("2014-08-01")) %>%  # to have the same, comparable period
