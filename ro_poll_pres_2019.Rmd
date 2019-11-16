@@ -49,7 +49,7 @@ Dancila <- paste0("D", sprintf('\u0103'), "ncil", sprintf('\u0103'))
 predicted <- dat
 
 predicted[nrow(predicted)+1,] <- NA
-predicted[20,]$`Fieldwork end data`<- as.Date("2019-11-10")
+predicted[21,]$`Fieldwork end data`<- as.Date("2019-11-10")
 predicted$`Polling company`[predicted$`Fieldwork end data`==as.Date("2019-11-10")] <- "IMAS" # this is not visible anyway, just to avoid NA on the ggplots
 
 predict_candidate <- b <- function(candidate){
