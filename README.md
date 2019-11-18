@@ -31,7 +31,7 @@ A collection of articles published based on this work is available here:
 
 ## Hungarian
 
-<a href="http://itthon.transindex.ro/?cikk=28116&kozvelemenykutatasi_attekinto_az_elnokvalasztas_elso_forduloja_elott"  target="_blank"> Közvélemény-kutatási áttekintő a romániai elnökválasztás első fordulója előtt</a>, Transindex, November 08, 2019
-
 <a href="https://kozvelemeny.wordpress.com/2019/11/04/kozvelemeny-kutatasi-attekinto-a-romaniai-elnokvalasztas-elso-forduloja-elott/"  target="_blank"> Közvélemény-kutatási áttekintő a romániai elnökválasztás első fordulója előtt</a>, Vox Populi választási kalauz, November 04, 2019
+
+<a href="http://itthon.transindex.ro/?cikk=28116&kozvelemenykutatasi_attekinto_az_elnokvalasztas_elso_forduloja_elott"  target="_blank"> Közvélemény-kutatási áttekintő a romániai elnökválasztás első fordulója előtt</a>, Transindex, November 08, 2019
 
