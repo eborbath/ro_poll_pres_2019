@@ -23,6 +23,10 @@ A collection of articles published based on this work is available here:
 
 <a href="https://www.openpolitics.ro/who-will-make-the-second-round-of-the-romanian-presidential-election-what-the-polling-data-says/"  target="_blank"> Who will make the second round of the Romanian presidential election? What the polling data says</a>, Open Politics, November 09, 2019
 
+<a href="https://www.openpolitics.ro/who-will-make-the-second-round-of-the-romanian-presidential-election-what-the-polling-data-says/"  target="_blank"> How accurate were the polls before the first round of the Romanian presidential elections?</a>, Open Politics, November 18, 2019
+
+<a href="https://www.openpolitics.ro/who-will-make-the-second-round-of-the-romanian-presidential-election-what-the-polling-data-says/"  target="_blank"> Polling the polls: How accurate were they before the first round of the Romanian presidential elections?</a>, Vox Populi, November 18, 2019
+
 ## Romanian
 
 <a href="https://www.openpolitics.ro/cine-intra-in-turul-doi-al-alegerilor-prezidentiale-ce-indica-toate-sondajele-de-opinie/"  target="_blank"> Cine intră în turul doi al alegerilor prezidențiale? Ce indică toate sondajele de opinie</a>, Open Politics, November 07, 2019
