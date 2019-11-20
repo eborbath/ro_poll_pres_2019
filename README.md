@@ -23,9 +23,9 @@ A collection of articles published based on this work is available here:
 
 <a href="https://www.openpolitics.ro/who-will-make-the-second-round-of-the-romanian-presidential-election-what-the-polling-data-says/"  target="_blank"> Who will make the second round of the Romanian presidential election? What the polling data says</a>, Open Politics, November 09, 2019
 
-<a href="https://www.openpolitics.ro/who-will-make-the-second-round-of-the-romanian-presidential-election-what-the-polling-data-says/"  target="_blank"> How accurate were the polls before the first round of the Romanian presidential elections?</a>, Open Politics, November 18, 2019
+<a href="https://www.openpolitics.ro/how-accurate-were-the-polls-before-the-first-round-of-the-romanian-presidential-elections/"  target="_blank"> How accurate were the polls before the first round of the Romanian presidential elections?</a>, Open Politics, November 18, 2019
 
-<a href="https://www.openpolitics.ro/who-will-make-the-second-round-of-the-romanian-presidential-election-what-the-polling-data-says/"  target="_blank"> Polling the polls: How accurate were they before the first round of the Romanian presidential elections?</a>, Vox Populi, November 18, 2019
+<a href="https://kozvelemeny.wordpress.com/2019/11/18/polling-the-polls-how-accurate-were-they-before-the-first-round-of-the-romanian-presidential-elections/"  target="_blank"> Polling the polls: How accurate were they before the first round of the Romanian presidential elections?</a>, Vox Populi, November 18, 2019
 
 ## Romanian
 
