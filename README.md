@@ -33,6 +33,8 @@ A collection of articles published based on this work is available here:
 
 <a href="https://www.libertatea.ro/stiri/cine-intra-in-turul-doi-al-alegerilor-prezidentiale-ce-indica-toate-sondajele-2794689"  target="_blank"> Cine intră în turul doi al alegerilor prezidențiale? Ce indică toate sondajele ﻿și care sunt marile necunoscute</a>, Libertatea, November 08, 2019
 
+<a href="https://www.openpolitics.ro/cat-de-aproape-de-realitate-au-fost-sondajele-de-dinaintea-primului-tur/"  target="_blank">Cât de aproape de realitate au fost sondajele de dinaintea primului tur?</a>, Open Politics, November 21, 2019
+
 ## Hungarian
 
 <a href="https://kozvelemeny.wordpress.com/2019/11/04/kozvelemeny-kutatasi-attekinto-a-romaniai-elnokvalasztas-elso-forduloja-elott/"  target="_blank"> Közvélemény-kutatási áttekintő a romániai elnökválasztás első fordulója előtt</a>, Vox Populi választási kalauz, November 04, 2019
